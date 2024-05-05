@@ -6,7 +6,7 @@ close all;
 
 beta_f=200;
 v_t=25.7/1000;
-i_c=4/1000;
+i_c=6/1000;
 R1=1000;
 R2=10000;
 Rs=10000;
@@ -33,8 +33,8 @@ At=AtINF*(-1)*ABs/(1-ABs); %Slutna förstärkningen, At(s).
 
 %% med kompensering C
 w0=((1-ABnoll)*p1*p2)^(1/2);
-n_ph=-(w0^2)/(2*w0+p1+p2);
-c_ph=-1/(R2*n_ph);
+n_ph=-(w0^2)/(sqrt(2)*w0+p1+p2);
+c_ph= -1/(R2*n_ph);
 p3_ph_c=-(R1+R2)/(R1*R2*c_ph);
 
 ABs_ph_c=((1-s/n_ph)*ABnoll)/((1-s/p1)*(1-s/p2)*(1-s/p3_ph_c));
@@ -56,10 +56,10 @@ AtINF_l=1+(R2/R1_l);
 At_c=AtINF_c*(-1)*ABs_ph_c/(1-ABs_ph_c);
 At_l=AtINF_l*(-1)*ABs_ph_l/(1-ABs_ph_l);
 
-[gainm, pm_komp] = margin((-1)*ABs_ph_c);
+[gainm, pm_komp] = margin(At_c);
 pm_komp
 
-BW = bandwidth(At_c/(2*pi));
+BW = bandwidth(At_c);
 BW
 %% plot
 
