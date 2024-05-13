@@ -15,7 +15,7 @@ c_prim_1=100*10^-9;
 c_2=2.2*10^-6;
 
 r_pi_2=(beta_f*v_t)/i_c;
-r_pi_1_prim=2*(beta_f*v_t)/(i_c);
+r_pi_1_prim=2*(beta_f*v_t)/(i_c/2);
 
 
 %DC slingförstärkning och slingpoler:
@@ -56,15 +56,16 @@ AtINF_l=1+(R2/R1_l);
 At_c=AtINF_c*(-1)*ABs_ph_c/(1-ABs_ph_c);
 At_l=AtINF_l*(-1)*ABs_ph_l/(1-ABs_ph_l);
 
-[gainm, pm_komp] = margin(At_c);
+[gainm, pm_komp] = margin((-1)*ABs_ph_c);
 pm_komp
 
 BW = bandwidth(At_c);
 BW
+
 %% plot
 
-%Fasmarginal kollas "open loop", dvs frekvensen w0, dŠr |AB(w0)|=1=0dB,
-%Undersök (plotta) fasmarginal (PM) genom att plotta slingförstärkningen
+% Fasmarginal kollas "open loop", dvs frekvensen w0, dŠr |AB(w0)|=1=0dB,
+% Undersök (plotta) fasmarginal (PM) genom att plotta slingförstärkningen
 
 
 figure(1);bode((-1).*ABs, (-1).*ABs_ph_c, (-1).*ABs_ph_l, 'b'); title('Slingförstärkning AB(s)'); legend('utan', 'med kondensator', 'med spole')
@@ -73,7 +74,7 @@ figure(2);bode(At, At_c, At_l, 'b'); title('Den slutna förstärkningen, At'); leg
 
 figure(3); step(At, At_c, At_l); title('Systemets stegsvar'); legend('utan', 'med kondensator', 'med spole');
 
-%% rlocus
+rlocus
 
 figure(4)
 rlocus( 1 / ( (1-s/p1)*(1-s/p2) ) ); title('Utan kompensering');
